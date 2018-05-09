@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import Calendar from 'react-calendar';
-import './Calendar.scss';
+import MonthCalendar from '../components/MonthCalendar';
 
 class App extends Component {
     
@@ -17,37 +16,25 @@ class App extends Component {
         endDate.setDate(startDate.getDate() + 10);
     };
 
-    Noofmonths(date1, date2) {
-        var Nomonths;
-        Nomonths= (date2.getFullYear() - date1.getFullYear()) * 12;
-        Nomonths-= date1.getMonth() + 1;
-        Nomonths+= date2.getMonth() +1; // we should add + 1 to get correct month number
-        return Nomonths <= 0 ? 1 : Nomonths + 1;
-    }
-
-    customTileStyle(date, view, currentMonth) {
-        if (date.getMonth() !== currentMonth) {
-            return 'invalidDate';
-        }
-        if (date.getDay() === 0 || date.getDay() === 6) {
-            return 'weekendClass';
-        }
-
-        return 'weekClass';
-    }
-
     render () {
         return (
-        	<div>
+        	<div style={styles.container}>
                 <h1> Calendario </h1>
-                <Calendar 
-                    calendarType='US' view='month'
-                    tileClassName={({ date, view }) => this.customTileStyle(date, view, 4)}
-                    selectRange
-                    value={this.state.date}
-                />
+                <br/>
+                <MonthCalendar />
+                <br/>
+                <MonthCalendar />
             </div>
         )
+    }
+}
+
+const styles = {
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }
 
