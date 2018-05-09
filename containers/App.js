@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import DateForm from '../components/DateForm';
 import MonthCalendar from '../components/MonthCalendar';
 
 class App extends Component {
@@ -8,6 +9,7 @@ class App extends Component {
     
         this.state = {
             date: [new Date()],
+            value: '',
         };
 
         const startDate = new Date();
@@ -16,10 +18,20 @@ class App extends Component {
         endDate.setDate(startDate.getDate() + 10);
     };
 
+    handleChange(event) {
+        this.setState({value: event.target.value});
+      }
+    
+      handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.value);
+        event.preventDefault();
+      }
+
     render () {
         return (
         	<div style={styles.container}>
                 <h1> Calendario </h1>
+                <DateForm />
                 <br/>
                 <MonthCalendar />
                 <br/>

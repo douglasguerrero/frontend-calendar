@@ -4,7 +4,6 @@ import '../styles/Calendar.scss';
 import {customTileStyle} from '../util';
 
 export default class MonthCalendar extends React.Component {
-    
 	render () {
 		return (
 			<div>
