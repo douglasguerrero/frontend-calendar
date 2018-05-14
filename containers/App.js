@@ -1,45 +1,50 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 import DateForm from '../components/DateForm';
 import MonthCalendar from '../components/MonthCalendar';
-import {Noofmonths} from '../util';
+import { Noofmonths, checkIfDateIsValid, checkIfNumberIsValid } from '../util';
 
 class App extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
-            date: [new Date()],
-            value: '',
+            startDate: null,
+            numberOfDays: null,
+            countryCode: null,
         };
     };
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
-    
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
-    }
+    handleChildClick(formObject) {
+        const startDate = moment(formObject.startDate, "MM/DD/YYYY");
+        if (checkIfDateIsValid(startDate) && checkIfNumberIsValid(formObject.numberOfDays)) { 
+            this.setState({startDate});
+            this.setState({numberOfDays: Number(formObject.numberOfDays)});
+            this.setState({countryCode: formObject.countryCode});
+        } else {
+            alert('date format or week number is invalid');
+        }
+     }
 
     renderCalendar = () => {
-        const startDate = new Date(2018,7,15);
-        const endDate = new Date(2018,7,15);
-        endDate.setDate(startDate.getDate() + 160);
-
-        const numberOfMonths = Noofmonths(startDate, endDate);
-        const startMonth = startDate.getMonth();
-
-        const dateRange = {
-            startDate,
-            endDate,
-        }
-
         const calendarArray = [];
+        if(this.state.startDate !== null) {
+            const startDate = this.state.startDate.toDate();
+            const endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + this.state.numberOfDays);
 
-        for (let i = 0; i < numberOfMonths; i++) { 
-            calendarArray.push(<MonthCalendar key={`m${i}`} dateRange={dateRange} currentMonth={ startMonth + i }/>);
-            calendarArray.push(<br key={`b${i}`} />);
+            const numberOfMonths = Noofmonths(startDate, endDate);
+            const startMonth = startDate.getMonth();
+
+            const dateRange = {
+                startDate,
+                endDate,
+            }
+
+            for (let i = 0; i < numberOfMonths; i++) { 
+                calendarArray.push(<MonthCalendar key={`m${i}`} dateRange={dateRange} currentMonth={ startMonth + i }/>);
+                calendarArray.push(<br key={`b${i}`} />);
+            }
         }
 
         return calendarArray.length > 0 ? calendarArray : null;
@@ -50,7 +55,7 @@ class App extends Component {
         return (
         	<div style={styles.container}>
                 <h1> Calendario </h1>
-                <DateForm />
+                <DateForm onClick={this.handleChildClick.bind(this)}/>
                 <br/>
                 { calendar }
             </div>

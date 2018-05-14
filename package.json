@@ -30,6 +30,7 @@
   "dependencies": {
     "css-loader": "^0.28.5",
     "less-loader": "^4.0.5",
+    "moment": "^2.22.1",
     "react": "^15.6.1",
     "react-calendar": "^2.14.0",
     "react-dom": "^15.6.1",

@@ -7,6 +7,7 @@ export function Noofmonths(date1, date2) {
 }
 
 export function customTileStyle(date, view, currentDate, startDate, endDate) {
+
     if (date < startDate) {
         return 'invalidDate';
     }
@@ -16,15 +17,28 @@ export function customTileStyle(date, view, currentDate, startDate, endDate) {
     }
 
     const currentMonth = currentDate.getMonth();
-
     if (date.getMonth() !== currentMonth) {
-        
-        console.log('entro 1', date, currentMonth);
         return 'invalidDate';
     }
+
     if (date.getDay() === 0 || date.getDay() === 6) {
         return 'weekendClass';
     }
 
     return 'weekClass';
+}
+
+export function checkIfDateIsValid(date) {
+    if(date === '') {
+        return false;
+    }
+    var timestamp = Date.parse(date);
+    return !isNaN(timestamp);
+}
+
+export function checkIfNumberIsValid(number) {
+    if(number === '') {
+        return false;
+    }
+    return !isNaN(number);
 }
