@@ -6,8 +6,20 @@ export function Noofmonths(date1, date2) {
     return Nomonths <= 0 ? 1 : Nomonths + 1;
 }
 
-export function customTileStyle(date, view, currentMonth) {
+export function customTileStyle(date, view, currentDate, startDate, endDate) {
+    if (date < startDate) {
+        return 'invalidDate';
+    }
+
+    if (date > endDate) {
+        return 'invalidDate';
+    }
+
+    const currentMonth = currentDate.getMonth();
+
     if (date.getMonth() !== currentMonth) {
+        
+        console.log('entro 1', date, currentMonth);
         return 'invalidDate';
     }
     if (date.getDay() === 0 || date.getDay() === 6) {
